@@ -1,6 +1,7 @@
 import urllib2, HTMLParser, cookielib
 
 from BeautifulSoup import BeautifulSoup
+from parse import parse, print_headers
 #import requests
 
 site = "http://www.c4results.org.uk"
@@ -57,28 +58,12 @@ for league in top_page.findAll('tr'):
                 href = anchors[0]['href']
                 #print 'Second Href', href
                 eacupage = accessor.load_url(siteurl + href)
+                headers = True
                 for link in eacupage.findAll('a'):
                    for team in eacu_teams:
                       if link.contents[0].endswith(team):
-                         print team, link['href']
                          league_page = accessor.load_url(site + link['href']).findAll('table')[0]
-                         print league_page
-                         header_data = league_page.findAll('th')
-                         print [h.contents for h in header_data]
-                         header_dict = { 'TEAM':1 }
-                         index = 0
-                         for header in header_data:
-                           if len(header.contents) > 0:
-                             header_dict[header.contents[0]] = index
-                           #print header.contents
-                           index = index + 1
-                           
-                         rows = league_page.findAll('tr')
-                         for row in rows[1:6]:
-                            cells = row.findAll('td')
-                            #print [c.contents for c in cells]
-                            for h in header_dict:
-                               index = header_dict[h]
-                               print h, cells[index]
-                            print
-                         print
+                         if headers:
+                            print_headers(league_page) 
+                            headers = False
+                         parse(team, league_page)
