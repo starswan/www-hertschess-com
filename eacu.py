@@ -30,11 +30,6 @@ class SiteAccessor(object):
 
 accessor = SiteAccessor()
 
-def process_team(link):
-   print link['href'], link.contents
-   #league_page = BeautifulSoup(urllib.urlopen(site + link['href']).read())
-   #print league_page
-
 #def start_new():
 #  resp = requests.get(thisurl, params=dbversion)
 #  print resp.cookies
@@ -66,7 +61,6 @@ for league in top_page.findAll('tr'):
                    for team in eacu_teams:
                       if link.contents[0].endswith(team):
                          print team, link['href']
-                         #league_page = BeautifulSoup(urllib.urlopen(site + link['href']).read())
                          league_page = accessor.load_url(site + link['href']).findAll('table')[0]
                          print league_page
                          header_data = league_page.findAll('th')
