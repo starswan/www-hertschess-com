@@ -4,13 +4,14 @@
 from BeautifulSoup import BeautifulSoup
 import sys, string
 import HTMLParser
+from utils import commaSep
 
 parser = HTMLParser.HTMLParser()
 
 soup = BeautifulSoup(file(sys.argv[1]).read())
 
-def writeToFile(items):
-  print string.join(['"' + i + '"' for i in items], ',')
+#def commaSep(items):
+#  return ",".join(['"' + i + '"' for i in items])
 
 for division in soup.findAll('tr', {'bgcolor':'silver'}):
   parent = division.parent
@@ -22,7 +23,7 @@ for division in soup.findAll('tr', {'bgcolor':'silver'}):
   headers.append('Division')
   headers.append('Position')
   if division == "1":
-    writeToFile(headers)
+    print commaSep(headers)
 
   position = 1
   for row in rows[1:]:
@@ -30,4 +31,4 @@ for division in soup.findAll('tr', {'bgcolor':'silver'}):
     data.append(division)
     data.append(str(position))
     position = position + 1
-    writeToFile(data)
+    print commaSep(data)

@@ -1,4 +1,5 @@
 import sys, BeautifulSoup
+from utils import commaSep
 
 table = BeautifulSoup.BeautifulSoup(file(sys.argv[1]).read())
 
@@ -11,9 +12,9 @@ for header in header_data:
       header_dict[header.contents[0]] = index
    index = index + 1
 
-def commaSep(array):
-  return ",".join(['"' + a.strip() + '"' for a in array])
-
+#def commaSep(array):
+#  return ",".join(['"' + a.strip() + '"' for a in array])
+#
 print commaSep([h for h in header_dict])
 
 def celldata(cells, index):
