@@ -3,9 +3,9 @@ from utils import commaSep
 HEADER_TRANS = { 'TEAM':'Team Name', 'PLAYED':'P', 'WON':'W', 'DRAWN':'D', 'LOST':'L', 
                 'GAMES':'For','POINTS':'Ps', 'POSITION':'Position', 'DIVISION':'Division'}
 
-def celldata(cells, index):
+def celldata(cells, division, index):
   if index == 1:
-    return cells[index].findAll('a')[0].contents[0]
+    return cells[index].findAll('a')[0].contents[0] + division
   elif index > 7:
     return cells[index]
   else:
@@ -34,7 +34,7 @@ def parse(division, table):
     cells = row.findAll('td')
     cells.append(str(index))
     cells.append(division)
-    data = [celldata(cells, header_dict[h]) for h in header_dict]
+    data = [celldata(cells, division, header_dict[h]) for h in header_dict]
     print commaSep(data)
     index = index + 1
 
